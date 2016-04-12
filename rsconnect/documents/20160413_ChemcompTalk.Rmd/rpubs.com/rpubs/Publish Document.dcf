@@ -1,0 +1,7 @@
+name: Publish Document
+account: rpubs
+server: rpubs.com
+bundleId:
+        https://api.rpubs.com/api/v1/document/170579/25639f55a9d54258b7b2908f70c257e3
+url: http://rpubs.com/dasaptaerwin/170579
+when: 1460500042.26697
