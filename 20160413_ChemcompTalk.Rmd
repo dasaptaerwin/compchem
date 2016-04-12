@@ -1,0 +1,85 @@
+---
+title: "R for computational chemistry"
+author: "Dasapta Erwin Irawan"
+date: "April 12, 2016"
+output: 
+  slidy_presentation:
+    incremental: true
+    highlight: pygments
+    fig_width: 7
+    fig_height: 6
+    fig_caption: true
+---
+
+
+
+# intro
+
+----
+
+## about me
+
+- Name: Dasapta Erwin Irawan
+- Affiliation: Applied Geology, Faculty of Earth Sciences and Technology, Institut Teknologi Bandung
+- Research interests: hydrogeology, hydrochemistry, open science
+- Education: Dept of Geology ITB 
+    + S1 1994-1998
+    + S2 1999-2001
+    + S3 2005-2009
+
+----
+
+## my networks
+
+- Socmed: Twitter, Facebook
+- repository:
+  + R programming: Github
+  + Hydrogeology: figshare, zenodo, osf
+    
+
+----
+
+## why R
+
+- Turn off alarm
+- Get out of bed
+
+----
+
+# dive in
+
+## websites
+
+## installation
+
+## basic principles
+
+### R components
+
+- dataset
+- code
+- output
+- interpretation
+
+### dataset
+
+- formats
+- building 
+
+### functions vs package
+
+- built in functions
+- custom mad functions
+- packages:
+  + built upon specific objectives
+  + consist of a set or sets of functions
+
+# recommended efforts
+
+## useful links
+
+## typical work flow
+
+## 
+
+# references
