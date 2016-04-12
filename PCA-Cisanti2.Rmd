@@ -1,0 +1,143 @@
+---
+title: "Groundwater spring classification in Southern Bandung area: PCA dan cluster analysis application"
+author: "Arif Susanto and Dasapta Erwin Irawan"
+date: "December 20, 2015"
+output: 
+  pdf_document:
+    toc: true
+    toc_depth: 2
+---
+
+# Abstract
+
+This paper discusses groundwater spring classification based on geological observation supported by multivariate statistics. Seven groundwater spring sites located in the volcanic area of Southern Bandung area have been observed and sampled to test the hydrochemistry contents. We have measured 30 variables for each sample including: physical properties (turbidity, TDS, EC, etc), major elements (Ca, Na, Mg, etc), and trace elements (SiO_2, B, As, etc). R statistical packages were used to fit the principal component analysis (PCA) and cluster analysis (CA). 
+We find three clusters on the CA: cluster 1 (Situ Kince, Bedil), cluster 2 Ciseupan, Ciblegblegan),  and cluster 3 (Citawa, Cigoong, Cikoleberes). The PCA shows SiO2 is the strongest variable to control cluster 1; nitrate, EC, TDS, hardness to control cluster 2; and no string variables signal for cluster 3.    
+
+#	Introduction
+
+This paper discusses groundwater spring classification based on geological observation supported by multivariate statistics.
+
+
+#	Materials and methods
+
+The data set discussed in this paper came from Comunity Empowerment Research 2015 entitled "......". We managed to set up a hydrochemical data set with a dimension of seven rows and 33 columns. 
+
+We observed 15 spring sites but only seven of them were analysed in the laboratory. 
+
+## Field mapping 
+
+The field geological mapping was conducted in April-July 2015.
+
+## Laboratory testing 
+
+We tested water samples at the Water Quality Lab, Dept of Environmental Engineering ITB.
+
+## Statistical analysis
+
+In this paper we will use free and open source R statistical software. R is a system for statistical computation and graphics, consists of a language plus a run-time environment with graphics, a debugger, access to certain system functions, and the ability to run programs stored in script files. R can be freely downloaded has a home page at http://www.R-project.org/.  
+
+Both methods, PCA and CA, have used extensively to classify hydrochemical data. A few examples were taken from Irawan et.al (2009), ...., ...., ...., In all of those examples, PCA were used to reduce the dimensionality of the data set. In this case we need to reduce the number of measured variables into groups of variables that significantly contribute to the hydrochemical outputs. The PCA methods will simultaneously transform the multidimensional axis of from the original data set to make a new set of Principal Components (PC's). The original variables were then projected on to the new created PC, based on its loading values. Each sample then were also plotted against those PC's to see the most controlling PC for each sample. 
+
+Package yang diperlukan:
+
+1. PCA: ```princomp()``` atau ```prcomp()```, gunanya untuk mengekstrak variabel (component) berpengaruh dalam suatu data set dengan jumlah variabel yang sangat banyak. Fungsi ini akan mengelompokkan variabel menjadi lebih ringkas, misal: bila semua kita punya 33 variabel, maka nantinya akan dapat menjadi dua atau tiga kelompok variabel yang disebut PC (principal component)
+2. Cluster: ```kmeans()``` dan ```hclust()```, gunanya untuk menguji kemiripan sampel berdasarkan perhitungan [Euclidean distance](https://en.wikipedia.org/wiki/Euclidean_distance) dan mengelompokkannya dalam sebuah [dendogram](https://en.wikipedia.org/wiki/Dendrogram).
+
+Namun demikian dalam kesempatan ini saya akan menggunakan package:
+
+1. ```pcamethods``` yang ditulis oleh Wolfram Stacklies, Henning Redestig, dan Kevin Wright.   [link](http://www.bioconductor.org/packages//2.10/bioc/html/pcaMethods.html)
+2. ```cluster``` yang ditulis oleh Friedrich Leisch dan Bettina Gruen [link](http://cran.cnr.berkeley.edu/web/views/Cluster.html) 3. ```vegan``` ditulis oleh Jari Oksanen, F. Guillaume Blanchet, Roeland Kindt, Pierre Legendre, Peter R. Minchin, R. B. O'Hara, Gavin L. Simpson, Peter Solymos, M. Henry H. Stevens, Helene Wagner.
+
+Tahapannya akan saya jelaskan lebih rinci besok ya per blok [kode](https://goo.gl/Vw8FwS). Data set juga akan segera tersedia setelah publikasi diterbitkan. 
+
+1. Instalasi dan load library
+
+Dalam analisis ini kami menggunakan beberapa package: `pcaMethods`, `cluster`, `vegan` dan aplikasi pembuka format xls `readxl`. 
+
+Package `pcamethods` tersedia di server repo Bioconductor, sehingga cara pengunduhan dan instalasinya pun berbeda. Untuk membuka file data dengan format xls ada beberapa package lainnya, misalnya 'readr'. Kami membuka file langsung dari ormat xls karena ditemui masalah saat membuka file dengan fungsi `read.csv` standar. Semantara ini kami menduga masalah ada di konversi `unicode utf-xxx`.
+
+
+
+# Regional hydrogeological setting
+
+The hydrogeological setting of the area is fairly complex due to various volcanic systems.
+
+#	Results and discussions
+
+## PCA
+
+```{r, warning=FALSE, message=FALSE}
+library(pcaMethods)
+df <- read.csv("data_cisanti.csv")
+df <- na.omit(df) # omitting NA if any
+
+# Exploratory using pairs() function
+# Assesing data patterns
+pairs(df[1:10],
+      lower.panel=panel.smooth, 
+      upper.panel=NULL, 
+      pch=20)
+
+# Run PCA (using pcamethods package)
+## svdImpute = standard pca, with imputation, standardised, method univariate (uv)
+pca <- pca(df, 
+           method = "svdImpute", 
+           scale = "uv",
+           center = T,
+           nPcs = 5,
+           evalPcs = 1:5)
+summary(pca)
+
+
+## Evaluating results
+plot(pca, type="lines")
+slplot(pca) # default function in pcamethods but not big enough
+loadings(pca) # loadings of each variables
+scores(pca) # scores of each samples respectively to each variables
+row.names(scores(pca)) 
+
+```
+
+## Cluster
+
+
+
+
+#	Conclusions
+
+
+
+#	Acknowledgements
+
+
+
+#	References
+
+http://www2.stat.unibo.it/montanari/Didattica/Multivariate/CA_lab.pdf
+
+http://cc.oulu.fi/~jarioksa/opetus/metodi/sessio3.pdf
+
+http://www2.stat.unibo.it/montanari/Didattica/Multivariate/PCA_lab1.pdf
+
+http://bioconductor.wustl.edu/bioc/vignettes/pcaMethods
+
+https://cran.r-project.org/web/packages/vegan/vignettes/intro-vegan.pdf
+
+http://cc.oulu.fi/~jarioksa/opetus/metodi/vegantutor.pdf
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
